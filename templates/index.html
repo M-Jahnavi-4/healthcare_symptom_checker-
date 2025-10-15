@@ -1,0 +1,49 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Healthcare Symptom Checker</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Healthcare Symptom Checker</h1>
+    <form id="symptom-form">
+      <label for="symptoms">Enter symptoms (brief):</label>
+      <textarea id="symptoms" rows="6" placeholder="e.g. fever, sore throat, runny nose"></textarea>
+      <button type="submit">Analyze</button>
+    </form>
+
+    <div id="result" class="card hidden">
+      <h2>Probable Conditions</h2>
+      <ul id="conditions"></ul>
+      <h2>Recommended Next Steps</h2>
+      <ul id="next_steps"></ul>
+      <p id="disclaimer" class="disclaimer"></p>
+    </div>
+
+    <p class="note">This tool is for educational purposes only — not a medical diagnosis.</p>
+  </div>
+
+  <script>
+  document.getElementById('symptom-form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const symptoms = document.getElementById('symptoms').value.trim();
+    if(!symptoms){ alert('Please enter symptoms.'); return; }
+    const res = await fetch('/api/diagnose', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({symptoms})
+    });
+    const data = await res.json();
+    if(data.error){ alert('Error: '+(data.error||'Unknown')); return; }
+    document.getElementById('conditions').innerHTML = (data.conditions||[]).map(x => '<li>'+x+'</li>').join('') || '<li>No conditions found</li>';
+    document.getElementById('next_steps').innerHTML = (data.next_steps||[]).map(x => '<li>'+x+'</li>').join('') || '<li>No recommendations</li>';
+    document.getElementById('disclaimer').innerText = data.disclaimer || '';
+    document.getElementById('result').classList.remove('hidden');
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+
+Demo script (suggested):
+1. Start the app: python app.py
+2. Open browser to http://127.0.0.1:5000
+3. Enter sample symptoms like: "fever, sore throat, runny nose, coughing" and click Analyze.
+4. If you have set OPENAI_API_KEY, the app will query the model for reasoning. Otherwise it returns the mocked response.
