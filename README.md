@@ -38,15 +38,3 @@ Educational demo project that accepts symptom text and returns probable conditio
 ## Notes
 - If `OPENAI_API_KEY` is **not** set, the app will run in a **mocked mode** (rule-based) so you can demo without API usage.
 - Keep your API key secret. For production use, secure server environment variables and follow rate-limiting and safety best practices.
-
-## How it meets the assignment
-- Uses an LLM (configurable model) to process symptom text and provide reasoning-based recommendations.
-- Includes a simple frontend for demo and a safety disclaimer.
-- README describes running steps for submission/demo.
-
-## Submission checklist
-- [x] Project folder or GitHub repo
-- [x] README with setup instructions
-- [x] Demo-ready backend + frontend
-- [x] Safety disclaimer
-
